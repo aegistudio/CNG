@@ -1,0 +1,9 @@
+bin
+
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+*.cbp
+*.layout
