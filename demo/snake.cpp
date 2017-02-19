@@ -86,21 +86,25 @@ public:
 	void paintBorder() {
 		standout();
 		attron(COLOR_PAIR(mainLoop.outline));
-		for(int i = 1; i <= 2 * boundx; i ++) {
-			mvprintw(0, i, "-");
-			mvprintw(boundy + 1, i, "-");
-		}
+		move(0, 1);
+		for(int i = 1; i <= 2 * boundx; i ++)
+			addch(ACS_HLINE);
+
+		move(boundy + 1, 1);
+		for(int i = 1; i <= 2 * boundx; i ++)
+			addch(ACS_HLINE);
 
 		for(int i = 1; i <= boundy + 1; i ++) {
-			mvprintw(i, 0, "|");
-			mvprintw(i, 2 * boundx + 1, "|");
+			move(i, 0); 				addch(ACS_VLINE);
+			move(i, 2 * boundx + 1);	addch(ACS_VLINE);
 		}
 
-
-		mvprintw(0, 0, "+");
-		mvprintw(boundy + 1, 0, "+");
-		mvprintw(boundy + 1, 2 * boundx + 1, "+");
-		mvprintw(0, 2 * boundx + 1, "-");
+		int corny = boundy + 1;
+		int cornx = 2 * boundx + 1;
+		move(0, 0);			addch(ACS_ULCORNER);
+		move(corny, 0);		addch(ACS_LLCORNER);
+		move(corny, cornx);	addch(ACS_LRCORNER);
+		move(0, cornx);		addch(ACS_URCORNER);
 		attroff(COLOR_PAIR(mainLoop.outline));
 		standend();
 
