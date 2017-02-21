@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+import argparse
+import os
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('target', nargs = '?',
+        help = 'The CMakeLists.txt file located in.',
+	type = str, default = '.')
+    parser.add_argument('--no_default_gs', 
+        help = 'Prevent the default Graphics from \
+            being compiled. You will have to provide \
+	    your own graphics implementation this case. \
+	    Please refer to `include/cng/graphics.h` \
+            for detail.',
+        action = 'store_true', default = False)
+    parser.add_argument('-G', '--generate', 
+        help = 'Specify the schema that cmake is to generate. \
+	    like a vc project, a xcode project, a codeblock \
+	    project, etc.')
+    param = parser.parse_args()
+    command = '/usr/bin/env cmake'
+
+    # Generate scheme setting.
+    if param.generate is not None:
+        command = command + ' -G\'' + param.generate + '\''
+
+    # NO_DEFAULT_GS flag setting.
+    if param.no_default_gs:
+        command = command + ' -D_CNG_NODEFAULT_GS_=true '
+    else:
+        command = command + ' -D_CNG_NODEFAULT_GS_=false '
+
+    # End up with target cmake directory.
+    command = command + param.target
+
+    print(command)
+    os.system(command)
+
