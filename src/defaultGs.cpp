@@ -55,6 +55,8 @@ DefaultGraphics& DefaultGraphics::create(Rect& rect) {
 		result.location.y = y;
 		result.size.width = rect.size.width;
 		result.size.height = rect.size.height;
+
+		result.confine(m_rect);
 	});
     return *(new DefaultGraphics(result, m_window));
 }

@@ -115,23 +115,27 @@ public:
 		attroff(COLOR_PAIR(mainLoop.outline));
 	}
 
+	virtual void paintPause() {
+		const char* pause0 = "+-----------+";
+				const char* pause1 = "|   PAUSE   |";
+				const char* pause2 = "+-----------+";
+				int lenPause = strlen(pause1);
+				int pausePosY = boundy / 2;
+				int pausePosX = 1 + boundx - lenPause / 2;
+
+				standout();
+				attron(COLOR_PAIR(mainLoop.outline));
+				mvprintw(pausePosY - 1, pausePosX, pause0);
+				mvprintw(pausePosY + 0, pausePosX, pause1);
+				mvprintw(pausePosY + 1, pausePosX, pause2);
+				attroff(COLOR_PAIR(mainLoop.outline));
+				standend();
+	}
+
 	virtual void sync() override {
 		// Draw paused in the middle of screen.
 		if(paused) {
-			const char* pause0 = "+-----------+";
-			const char* pause1 = "|   PAUSE   |";
-			const char* pause2 = "+-----------+";
-			int lenPause = strlen(pause1);
-			int pausePosY = boundy / 2;
-			int pausePosX = 1 + boundx - lenPause / 2;
-
-			standout();
-			attron(COLOR_PAIR(mainLoop.outline));
-			mvprintw(pausePosY - 1, pausePosX, pause0);
-			mvprintw(pausePosY + 0, pausePosX, pause1);
-			mvprintw(pausePosY + 1, pausePosX, pause2);
-			attroff(COLOR_PAIR(mainLoop.outline));
-			standend();
+			paintPause();
 			return;
 		}
 
