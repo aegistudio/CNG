@@ -18,6 +18,10 @@ if __name__ == '__main__':
         help = 'Specify the schema that cmake is to generate. \
 	    like a vc project, a xcode project, a codeblock \
 	    project, etc.')
+    parser.add_argument('--generate-codeblocks',
+        help = 'Generate codeblocks project when setting this \
+	    flag.', dest = 'generate', action = 'store_const',
+	    const = 'CodeBlocks - Unix Makefiles')
     param = parser.parse_args()
     command = '/usr/bin/env cmake'
 
