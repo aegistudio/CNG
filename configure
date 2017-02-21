@@ -22,6 +22,15 @@ if __name__ == '__main__':
         help = 'Generate codeblocks project when setting this \
 	    flag.', dest = 'generate', action = 'store_const',
 	    const = 'CodeBlocks - Unix Makefiles')
+    parser.add_argument('--build_for_debug',
+        help = 'Toggle this project is built for debug, this\
+	    will enable the debug behavior by adding debug flags.\
+	    Defaultly turned off.', action = 'store_true', 
+	    dest = 'buildForDebug', default = False)
+    parser.add_argument('--build_for_release',
+        help = 'Toggle this project is built for release, the \
+	    contrary side of the flag `--build-for-debug`.',
+	    action = 'store_false', dest = 'buildForDebug')
     param = parser.parse_args()
     command = '/usr/bin/env cmake'
 
@@ -34,6 +43,12 @@ if __name__ == '__main__':
         command = command + ' -D_CNG_NODEFAULT_GS_=true '
     else:
         command = command + ' -D_CNG_NODEFAULT_GS_=false '
+
+    # Add cxx flags then.
+    command = command + ' -DCMAKE_CXX_FLAGS="-std=c++11 '
+    if param.buildForDebug:
+        command = command + '-g '
+    command = command + '" '
 
     # End up with target cmake directory.
     command = command + param.target
