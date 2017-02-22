@@ -7,12 +7,12 @@ if __name__ == '__main__':
     parser.add_argument('target', nargs = '?',
         help = 'The CMakeLists.txt file located in.',
 	type = str, default = '.')
-    parser.add_argument('--no_default_gs', 
+    parser.add_argument('--no-default-gs', 
         help = 'Prevent the default Graphics from \
             being compiled. You will have to provide \
 	    your own graphics implementation this case. \
 	    Please refer to `include/cng/graphics.h` \
-            for detail.',
+            for detail.', dest = 'no_default_gs',
         action = 'store_true', default = False)
     parser.add_argument('-G', '--generate', 
         help = 'Specify the schema that cmake is to generate. \
@@ -22,12 +22,16 @@ if __name__ == '__main__':
         help = 'Generate codeblocks project when setting this \
 	    flag.', dest = 'generate', action = 'store_const',
 	    const = 'CodeBlocks - Unix Makefiles')
-    parser.add_argument('--build_for_debug',
+    parser.add_argument('--generate-xcodeproj',
+        help = 'Generate xcode project when setting this \
+	    flag.', dest = 'generate', action = 'store_const',
+	    const = 'Xcode')
+    parser.add_argument('--build-for-debug',
         help = 'Toggle this project is built for debug, this\
 	    will enable the debug behavior by adding debug flags.\
 	    Defaultly turned off.', action = 'store_true', 
 	    dest = 'buildForDebug', default = False)
-    parser.add_argument('--build_for_release',
+    parser.add_argument('--build-for-release',
         help = 'Toggle this project is built for release, the \
 	    contrary side of the flag `--build-for-debug`.',
 	    action = 'store_false', dest = 'buildForDebug')
