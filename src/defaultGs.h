@@ -1,6 +1,7 @@
 #pragma once
 #include "ncurses.h"
 #include "cng/graphics.h"
+
 #include <functional>
 
 namespace cng {
@@ -21,7 +22,7 @@ public:
 
 	virtual void put(Point&, int = ' ') override;
 
-	virtual void print(Point&, const char*, ...) override;
+	virtual void print(Point&, int, const char*) override;
 
 	virtual void rowRepeat(Point&, int, int = ' ') override;
 

@@ -9,6 +9,10 @@ enum SnakeColor {
 
 class SnakeRender {
 public:
+	SnakeRender();
+
+	virtual ~SnakeRender();
+
 	void paintGame(SnakeLogic&);
 
 	void paintBorder(SnakeLogic&);

@@ -39,6 +39,30 @@ public:
 		if(location.y + size.height > maxAllowedY)
 			size.height = maxAllowedY - location.y;
 	}
+
+	Point upperLeft() {
+		return Point(
+			location.x + 0,
+			location.y + 0);
+	}
+
+	Point upperRight() {
+		return Point(
+			location.x + size.width - 1,
+			location.y + 0);
+	}
+
+	Point lowerLeft() {
+		return Point(
+			location.x + 0,
+			location.y + size.height - 1);
+	}
+
+	Point lowerRight() {
+		return Point(
+			location.x + size.width  - 1,
+			location.y + size.height - 1);
+	}
 };
 
 } // End of namespace cng.

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include <string.h>
 
 namespace cng {
 
@@ -21,7 +22,11 @@ public:
 	// Print a character, a string, or a square of the
 	// same characters.
 	virtual void put(Point&, int = ' ') = 0;
-	virtual void print(Point&, const char*, ...) = 0;
+	virtual void print(Point&, int, const char*) = 0;
+	inline void print(Point& point, const char* text) {
+		print(point, strlen(text), text);
+	}
+
 	virtual void rowRepeat(Point&, int, int = ' ') = 0;
 	virtual void columnRepeat(Point&, int, int = ' ') = 0;
 	virtual void fill(Rect&, int = ' ') = 0;
@@ -36,7 +41,7 @@ public:
 	// Please set flag _CNG_NODEFAULT_GS_ in order to
 	// disable the default implementation of the graphics.
 	// In this case you should implement your own graphics.
-	static const Graphics& null();
+	static Graphics& null();
 };
 
 }

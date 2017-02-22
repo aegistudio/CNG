@@ -3,13 +3,14 @@ using namespace cng;
 
 NullGraphics nullGs;
 
-static const Graphics& null() {
+Graphics& Graphics::null() {
 	return nullGs;
 }
 
 void NullGraphics::sync() {
+	m_window = stdscr;
 	int scrwidth, scrheight;
-	getmaxyx(m_window, scrheight, scrheight);
+	getmaxyx(m_window, scrheight, scrwidth);
     m_rect.size.width = scrwidth;
     m_rect.size.height = scrheight;
 }

@@ -15,6 +15,9 @@ else()
 		defaultGs.h)
 endif()
 
+# Configure the code for box.h implementation.
+set(CNG_SOURCES ${CNG_SOURCES} util.cpp)
+
 # Assemble the code together.
 add_library(CNG ${CNG_SOURCES})
 target_link_libraries(CNG curses)

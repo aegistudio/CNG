@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <string.h>
 
+SnakeRender::SnakeRender() {	}
+
+SnakeRender::~SnakeRender() {	}
+
 void SnakeRender::paintGame(SnakeLogic& logic) {
 	standout();
 	attron(COLOR_PAIR(SnakeColor::snake));

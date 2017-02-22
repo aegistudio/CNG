@@ -2,11 +2,12 @@
 using namespace cng;
 
 void DefaultGraphics::snapCall(Point& point, std::function<void(int, int)> next) {
-    if(point.x < m_rect.size.width && point.y < m_rect.size.height) {
-		int actualX = point.x + m_rect.location.x;
-		int actualY = point.y + m_rect.location.y;
-		next(actualX, actualY);
-    }
+	if(point.x < 0 || point.y < 0) return;
+	if(point.x >= m_rect.size.width) return;
+	if(point.y >= m_rect.size.height) return;
+	int actualX = point.x + m_rect.location.x;
+	int actualY = point.y + m_rect.location.y;
+	next(actualX, actualY);
 }
 
 void DefaultGraphics::cursor(Point& point, int type) {
@@ -17,13 +18,13 @@ void DefaultGraphics::cursor(Point& point, int type) {
 
 void DefaultGraphics::put(Point& point, int character) {
 	snapCall(point, [&](int x, int y) {
-		mvwaddch(m_window, x, y, character);
+		mvwaddch(m_window, y, x, character);
     });
 }
 
-void DefaultGraphics::print(Point& point, const char* format, ...) {
+void DefaultGraphics::print(Point& point, int length, const char* text) {
 	snapCall(point, [&](int x, int y) {
-		mvwprintw(m_window, x, y, format);
+		mvwprintw(m_window, y, x, text);
 	});
 }
 
