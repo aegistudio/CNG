@@ -15,7 +15,7 @@ SnakeLogic::SnakeLogic(int _boundx, int _boundy)
 
 	srand(time(0));
 	newFood();
-	rotate(SnakeDirection::dirRight);
+	direction = &right;
 	m_score = 0;
 }
 
