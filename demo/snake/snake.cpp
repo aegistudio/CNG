@@ -6,6 +6,9 @@
 #include "snakerender.h"
 #include "curses.h"
 
+#include <thread>
+#include <chrono>
+
 #pragma push(scroll)
 #undef scroll
 
@@ -28,23 +31,13 @@ public:
 	SnakeGame(int _boundx, int _boundy)
 		: SnakeLogic(_boundx, _boundy), SnakeRender() {}
 
-	void gameover() {
-		mainLoop.enter(NULL);
-	}
-
-	virtual void sync() override {
-		// Draw paused in the middle of screen.
-		if(paused) {
+	virtual void sync() {
+		if(paused)
 			paintPause(*this);
-			return;
-		}
-		if(tick()) {
+		else {
 			wclear(stdscr);
 			paintGame(*this);
 			paintBorder(*this);
-		}
-		else {
-			gameover();
 		}
 	}
 
@@ -85,6 +78,16 @@ public:
 int main() {
 	SnakeGame game(32, 16);
 	mainLoop.enter(&game);
+	std::thread([&] {
+        while(true) {
+			std::this_thread::sleep_for(
+				std::chrono::milliseconds(100));
+			if(!game.tick()) {
+				mainLoop.enter(nullptr);
+				break;
+			}
+        }
+	}).detach();
 	mainLoop.loopMain();
 	return 0;
 }

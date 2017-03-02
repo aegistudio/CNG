@@ -7,12 +7,12 @@ set(SNAKE_COMMON_SOURCES snakepair.cpp snakepair.h
 
 # One use just main loop.
 add_executable(snake ${SNAKE_COMMON_SOURCES} nongsrender.cpp)
-target_link_libraries(snake CNG curses)
+target_link_libraries(snake CNG curses pthread)
 
 if(_CNG_NODEFAULT_GS_)
 	# You should compile default Graphics if you want this demo.
 else()
 	# Another use main loop and graphics.
 	add_executable(snakeGs ${SNAKE_COMMON_SOURCES} gsrender.cpp)
-	target_link_libraries(snakeGs CNG curses)
+	target_link_libraries(snakeGs CNG curses pthread)
 endif()

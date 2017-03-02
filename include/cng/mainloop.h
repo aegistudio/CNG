@@ -1,6 +1,7 @@
 #pragma once
 #include "handler.h"
 #include "stddef.h"
+#include <mutex>
 
 namespace cng {
 
@@ -24,6 +25,7 @@ public:
 
 class DefaultMainLoop : public MainLoop {
 	Handler* m_handler;
+	std::recursive_mutex m_handlerAccess;
 public:
   	DefaultMainLoop(): m_handler(NULL) {}
 	virtual ~DefaultMainLoop() {}

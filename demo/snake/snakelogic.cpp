@@ -16,6 +16,7 @@ SnakeLogic::SnakeLogic(int _boundx, int _boundy)
 	srand(time(0));
 	newFood();
 	direction = &right;
+	prevDirection = &right;
 	m_score = 0;
 }
 
@@ -35,50 +36,51 @@ std::deque<SnakePair>::iterator SnakeLogic::end() {
 void SnakeLogic::rotate(SnakeDirection p_direction) {
 	switch(p_direction) {
 		case SnakeDirection::dirUp:
-			if(direction -> x != 0)
+			if(prevDirection -> x != 0)
 				direction = &up;
 		break;
 
 		case SnakeDirection::dirDown:
-			if(direction -> x != 0)
+			if(prevDirection -> x != 0)
 				direction = &down;
 		break;
 
 		case SnakeDirection::dirLeft:
-			if(direction -> y != 0)
+			if(prevDirection -> y != 0)
 				direction = &left;
 		break;
 
 		case SnakeDirection::dirRight:
-			if(direction -> y != 0)
+			if(prevDirection -> y != 0)
 				direction = &right;
 		break;
 	}
 }
 
 bool SnakeLogic::tick() {
-		// Move snake.
-		SnakePair front = location.front();
-		int headPosX = front.x, headPosY = front.y;
+	prevDirection = direction;
+	// Move snake.
+	SnakePair front = location.front();
+	int headPosX = front.x, headPosY = front.y;
 
-		headPosX += direction -> x;
-		headPosY += direction -> y;
+	headPosX += direction -> x;
+	headPosY += direction -> y;
 
-		if(headPosX < 0 || headPosX >= boundx) return false;
-		if(headPosY < 0 || headPosY >= boundy) return false;
+	if(headPosX < 0 || headPosX >= boundx) return false;
+	if(headPosY < 0 || headPosY >= boundy) return false;
 
-		SnakePair newPosition = {headPosX, headPosY};
-		std::deque<SnakePair>::iterator iter;
-		for(iter = begin(); iter != end(); iter ++)
-			if(*iter == newPosition) return false;
+	SnakePair newPosition = {headPosX, headPosY};
+	std::deque<SnakePair>::iterator iter;
+	for(iter = begin(); iter != end(); iter ++)
+		if(*iter == newPosition) return false;
 
-		// Add new body portion.
-		if(newPosition == food) {
-			newFood();
-			m_score ++;
-		}
-		else location.pop_back();
+	// Add new body portion.
+	if(newPosition == food) {
+		newFood();
+		m_score ++;
+	}
+	else location.pop_back();
 
-		location.push_front(newPosition);
-		return true;
+	location.push_front(newPosition);
+	return true;
 }

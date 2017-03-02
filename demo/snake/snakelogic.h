@@ -11,7 +11,7 @@ enum class SnakeDirection {
 
 class SnakeLogic {
 	std::deque<SnakePair> location;
-	SnakePair* direction;
+	SnakePair *direction, *prevDirection;
 	SnakePair food;
 	int m_score;
 
