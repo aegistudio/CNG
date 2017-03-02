@@ -31,7 +31,7 @@ public:
 	SnakeGame(int _boundx, int _boundy)
 		: SnakeLogic(_boundx, _boundy), SnakeRender() {}
 
-	virtual void sync() {
+	virtual void repaint() {
 		if(paused)
 			paintPause(*this);
 		else {
@@ -39,6 +39,9 @@ public:
 			paintGame(*this);
 			paintBorder(*this);
 		}
+	}
+
+	virtual void sync() override {
 	}
 
 	virtual void click(int key, Point point) override {
@@ -79,14 +82,15 @@ int main() {
 	SnakeGame game(32, 16);
 	mainLoop.enter(&game);
 	std::thread([&] {
-        while(true) {
+		while(true) {
+			game.repaint();
 			std::this_thread::sleep_for(
 				std::chrono::milliseconds(100));
 			if(!game.tick()) {
 				mainLoop.enter(nullptr);
 				break;
 			}
-        }
+		}
 	}).detach();
 	mainLoop.loopMain();
 	return 0;
