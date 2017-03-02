@@ -20,5 +20,9 @@ endif()
 set(CNG_SOURCES ${CNG_SOURCES} util.cpp)
 
 # Assemble the code together.
-add_library(CNG ${CNG_SOURCES})
-target_link_libraries(CNG curses)
+if(_CNG_SHARED_LIB_)
+	add_library(CNG SHARED ${CNG_SOURCES})
+else()
+	add_library(CNG ${CNG_SOURCES})
+endif()
+target_link_libraries(CNG curses pthread)

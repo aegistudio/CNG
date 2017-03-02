@@ -13,7 +13,11 @@ if __name__ == '__main__':
 	    your own graphics implementation this case. \
 	    Please refer to `include/cng/graphics.h` \
             for detail.', dest = 'no_default_gs',
-        action = 'store_true', default = False)
+            action = 'store_true', default = False)
+    parser.add_argument('-S', '--shared-library',
+        help = 'Create a shared library instead of a static\
+	    one. Defaultly set to false.', dest = 'shared',
+	    action = 'store_true', default = False)
     parser.add_argument('-G', '--generate', 
         help = 'Specify the schema that cmake is to generate. \
 	    like a vc project, a xcode project, a codeblock \
@@ -47,6 +51,12 @@ if __name__ == '__main__':
         command = command + ' -D_CNG_NODEFAULT_GS_=true '
     else:
         command = command + ' -D_CNG_NODEFAULT_GS_=false '
+
+    # SHARED_LIB flag setting.
+    if param.shared:
+        command = command + ' -D_CNG_SHARED_LIB_=true '
+    else:
+        command = command + ' -D_CNG_SHARED_LIB_=false '
 
     # Add cxx flags then.
     command = command + ' -DCMAKE_CXX_FLAGS="-std=c++11 '
