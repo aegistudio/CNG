@@ -2,7 +2,8 @@
 set(${CNG_SOURCES} "")
 
 # Configure the code for main loop subsystem.
-set(CNG_SOURCES ${CNG_SOURCES} mainloop.cpp)
+set(CNG_SOURCES ${CNG_SOURCES} 
+	defaultMainLoop.cpp)
 
 # Configure the code for default graphics subsystem.
 if(_CNG_NODEFAULT_GS_)

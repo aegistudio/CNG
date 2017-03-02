@@ -31,8 +31,10 @@ public:
 	SnakeGame(int _boundx, int _boundy)
 		: SnakeLogic(_boundx, _boundy), SnakeRender() {}
 
+	bool isPaused() const { return paused; }
+
 	virtual void repaint() {
-		if(paused)
+		if(isPaused())
 			paintPause(*this);
 		else {
 			wclear(stdscr);
@@ -86,10 +88,11 @@ int main() {
 			game.repaint();
 			std::this_thread::sleep_for(
 				std::chrono::milliseconds(100));
-			if(!game.tick()) {
-				mainLoop.enter(nullptr);
-				break;
-			}
+			if(!game.isPaused())
+				if(!game.tick()) {
+					mainLoop.enter(nullptr);
+					break;
+				}
 		}
 	}).detach();
 	mainLoop.loopMain();
